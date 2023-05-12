@@ -6,6 +6,7 @@ from .models import Attacks
 from django.http import Http404
 from . import attacksRun
 from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 import time
 
 input_gizli = 0
@@ -40,7 +41,7 @@ def attacks(request, attacksId):
             attacksRun.triggerAttack(
                 attacks.attackName, input_ipOrDns, input_port)
             input_gizli = request.POST.get('gizli')
-            time.sleep(3)
+            time.sleep(0.1)
   
         
         print("yollama işlemi bitti.")
@@ -64,3 +65,9 @@ def attacksCategoryDetails(request, attacksCategoryId):
 
 def attacksDetails(request, attacksId):
     return HttpResponse("Attack Detayı: "+str(attacksId))
+
+def kkm(request):
+    return render(request, 'kkmHome.html')
+
+def botnet(request):
+    return HttpResponseRedirect('https://192.168.1.104:8006/')
