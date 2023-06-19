@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-# Create your models here.
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 class AttacksCategory(models.Model):
     def __str__(self):
@@ -18,3 +18,14 @@ class Attacks(models.Model):
     attackCat = models.ForeignKey(AttacksCategory,on_delete=models.CASCADE)
     attackDesc = models.CharField(max_length=1000,null=True)
     drsLevel = models.IntegerField(validators=[MaxValueValidator(7),MinValueValidator(0)],null=True)
+
+# class Users(AbstractUser):
+#     def __str__(self):
+#         return self.username
+    
+#     username = models.CharField(max_length=150, unique=True)
+#     name = models.CharField(max_length=150, null=True)
+#     surname = models.CharField(max_length=150, null=True)
+#     mail = models.EmailField(max_length=50, null=True)
+#     password = models.CharField(max_length=128)
+

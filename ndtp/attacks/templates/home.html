@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <style>
+        body{
+            background-image: url('../../static/img/home.jpg');
+        }
         body,
         h1 {
             font-family: "Raleway", sans-serif
@@ -19,8 +22,9 @@
         }
 
         .bgimg {
-            /* background-image: url('https://i.ibb.co/2W3YZm2/home.jpg');*/
-            background-image: url('https://imgbox.io/ib/nCHWp1uYJk.jpg'); 
+            /*background-image: url('../../static/img/home.jpg');
+            background-image: url('https://imgbox.io/ib/nCHWp1uYJk.jpg'); https://i.ibb.co/2W3YZm2/home.jpg*/ 
+            background-image: url('https://i.ibb.co/2W3YZm2/home.jpg');
             min-height: 100%;
             background-position: center;
             background-size: cover;
@@ -36,7 +40,9 @@
     <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
 
         <div class="w3-display-topright w3-padding-large w3-xlarge">
-            Giriş Yap/Üye Ol
+            <a href="/index/login" >Giriş Yap</a>
+            <a href="/index/register" >Üye Ol</a>
+            
         </div>
         <div class="w3-display-middle">
             <h1 class="w3-jumbo w3-animate-top" style="margin-left:27px;width:80%;color:MediumSeaGreen">NDTP</h1>
